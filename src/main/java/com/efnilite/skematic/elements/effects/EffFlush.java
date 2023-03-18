@@ -10,6 +10,9 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.util.Kleenean;
 import com.efnilite.skematic.utils.FaweUtils;
+import com.sk89q.worldedit.EditSession;
+import com.sk89q.worldedit.WorldEdit;
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 
@@ -41,7 +44,8 @@ public class EffFlush extends Effect {
             return;
         }
 
-        FaweUtils.getPlayer(player).getNewEditSession().flushQueue();
+        //FaweUtils.getPlayer(player).getNewEditSession().flushQueue();
+
     }
 
     @Override

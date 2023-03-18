@@ -12,6 +12,7 @@ import ch.njol.util.Kleenean;
 import com.efnilite.skematic.utils.FaweUtils;
 import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.regions.CuboidRegion;
+import com.sk89q.worldedit.regions.Region;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 
@@ -46,7 +47,7 @@ public class EffCuboidFill extends Effect {
         }
 
         EditSession session = FaweUtils.getEditSession(Bukkit.getServer().getWorld(cuboid.getWorld().getName()));
-        session.setBlocks(cuboid, FaweUtils.parsePattern(blocks));
+        session.setBlocks((Region) cuboid, FaweUtils.parsePattern(blocks));
         session.flushQueue();
     }
 

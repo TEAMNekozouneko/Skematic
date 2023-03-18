@@ -11,9 +11,8 @@ import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
 import ch.njol.util.coll.CollectionUtils;
-import com.boydti.fawe.example.NMSMappedFaweQueue;
-import com.boydti.fawe.util.SetQueue;
 import com.efnilite.skematic.utils.FaweUtils;
+import com.sk89q.worldedit.EditSession;
 import org.bukkit.Location;
 import org.bukkit.event.Event;
 
@@ -64,8 +63,10 @@ public class ExprLightLevel extends SimpleExpression<Number> {
                 return;
             }
 
-            NMSMappedFaweQueue queue = (NMSMappedFaweQueue) SetQueue.IMP.getNewQueue(FaweUtils.getWorld(location.getWorld().getName()), true, false);
-            queue.setBlockLight(location.getBlockX(), location.getBlockY(), location.getBlockZ(), (int) delta[0]);
+            EditSession es = FaweUtils.getEditSession(location.getWorld());
+            es.setBlockLight((int) location.getX(), (int) location.getY(), (int) location.getZ(), (int) delta[0]);
+            /*NMSMappedFaweQueue queue = (NMSMappedFaweQueue) SetQueue.IMP.getNewQueue(FaweUtils.getWorld(location.getWorld().getName()), true, false);
+            queue.setBlockLight(location.getBlockX(), location.getBlockY(), location.getBlockZ(), (int) delta[0]);*/
         }
     }
 

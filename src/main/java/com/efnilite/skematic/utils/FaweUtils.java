@@ -1,16 +1,20 @@
 package com.efnilite.skematic.utils;
 
 import ch.njol.skript.aliases.ItemType;
-import com.boydti.fawe.FaweAPI;
-import com.boydti.fawe.object.FawePlayer;
-import com.boydti.fawe.object.schematic.Schematic;
+
+import com.fastasyncworldedit.core.FaweAPI;
+import com.plotsquared.core.plot.schematic.Schematic;
 import com.sk89q.worldedit.EditSession;
-import com.sk89q.worldedit.blocks.BaseBlock;
+import com.sk89q.worldedit.WorldEdit;
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldedit.extent.clipboard.Clipboard;
 import com.sk89q.worldedit.function.pattern.BlockPattern;
 import com.sk89q.worldedit.function.pattern.Pattern;
 import com.sk89q.worldedit.function.pattern.RandomPattern;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.world.World;
+import com.sk89q.worldedit.world.block.BaseBlock;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -34,8 +38,8 @@ public class FaweUtils {
      * @param o a Bukkit Player
      * @return FAWE player
      */
-    public static FawePlayer getPlayer(Player o) {
-        return FaweAPI.wrapPlayer(o);
+    public static com.sk89q.worldedit.entity.Player getPlayer(Player o) {
+        return BukkitAdapter.adapt(o);
     }
 
     /**
@@ -44,7 +48,7 @@ public class FaweUtils {
      * @return the editsession
      */
     public static EditSession getEditSession(org.bukkit.World w) {
-        return FaweAPI.getEditSessionBuilder(getWorld(w.getName())).autoQueue(true).build();
+        return WorldEdit.getInstance().newEditSession(BukkitAdapter.adapt(w));
     }
 
     /**
@@ -65,7 +69,12 @@ public class FaweUtils {
         RandomPattern parsedPattern = new RandomPattern();
         for (ItemType b : blocks) {
             if (b.getRandom().getType().isBlock()) {
-                parsedPattern.add(new BlockPattern(new BaseBlock(b.getRandom().getType().getId(), b.getRandom().getDurability())), 50);
+                parsedPattern.add(new BlockPattern(
+                        new BaseBlock(
+                                b.getRandom().getType().getId(),
+                                b.getRandom().getDurability())),
+                        50
+                );
             }
         }
         return parsedPattern;
@@ -77,8 +86,8 @@ public class FaweUtils {
      * @return a schematic
      */
     public static Schematic toSchematic(File file) {
-        try {
-            return new Schematic(FaweAPI.load(file).getClipboard());
+        try (Clipboard cb = FaweAPI.load(file)) {
+            return new Schematic(cb);
         } catch (IOException e) {
             return null;
         }

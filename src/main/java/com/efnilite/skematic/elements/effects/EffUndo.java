@@ -10,6 +10,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.util.Kleenean;
 import com.efnilite.skematic.utils.FaweUtils;
+import com.efnilite.skematic.utils.WeUtils;
 import com.sk89q.worldedit.EditSession;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -42,7 +43,7 @@ public class EffUndo extends Effect {
             return;
         }
 
-        EditSession session = FaweUtils.getPlayer(player).getNewEditSession();
+        EditSession session = WeUtils.getEditSession(player);
         session.undo(session);
         session.flushQueue();
     }

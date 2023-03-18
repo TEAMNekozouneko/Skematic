@@ -1,12 +1,13 @@
 package com.efnilite.skematic.utils;
+import com.google.gson.JsonObject;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.ServicePriority;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
@@ -200,7 +201,7 @@ public class Metrics {
             if (chart == null) { // If the chart is null, we skip it
                 continue;
             }
-            customCharts.add(chart);
+            customCharts.put(chart);
         }
         data.put("customCharts", customCharts);
 
@@ -266,7 +267,7 @@ public class Metrics {
 
                 for (RegisteredServiceProvider<?> provider : Bukkit.getServicesManager().getRegistrations(service)) {
                     try {
-                        pluginData.add(provider.getService().getMethod("getPluginData").invoke(provider.getProvider()));
+                        pluginData.put(provider.getService().getMethod("getPluginData").invoke(provider.getProvider()));
                     } catch (NullPointerException | NoSuchMethodException | IllegalAccessException | InvocationTargetException ignored) { }
                 }
             } catch (NoSuchFieldException ignored) { }
@@ -634,7 +635,7 @@ public class Metrics {
             }
             for (Map.Entry<String, Integer> entry : map.entrySet()) {
                 JSONArray categoryValues = new JSONArray();
-                categoryValues.add(entry.getValue());
+                categoryValues.put(entry.getValue());
                 values.put(entry.getKey(), categoryValues);
             }
             data.put("values", values);
@@ -678,7 +679,7 @@ public class Metrics {
                 allSkipped = false;
                 JSONArray categoryValues = new JSONArray();
                 for (int categoryValue : entry.getValue()) {
-                    categoryValues.add(categoryValue);
+                    categoryValues.put(categoryValue);
                 }
                 values.put(entry.getKey(), categoryValues);
             }

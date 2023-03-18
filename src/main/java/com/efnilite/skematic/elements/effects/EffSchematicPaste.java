@@ -13,16 +13,14 @@ import com.efnilite.skematic.objects.PasteOptions;
 import com.efnilite.skematic.objects.Schematic;
 import com.efnilite.skematic.objects.SchematicLoader;
 import com.efnilite.skematic.utils.FaweUtils;
-import com.sk89q.worldedit.CuboidClipboard;
 import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.MaxChangedBlocksException;
+import com.sk89q.worldedit.extent.clipboard.Clipboard;
 import com.sk89q.worldedit.math.BlockVector3;
-import com.sk89q.worldedit.world.DataException;
 import org.bukkit.Location;
 import org.bukkit.event.Event;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -88,13 +86,13 @@ public class EffSchematicPaste extends Effect {
         if (angle != null) {
 
             EditSession session = FaweUtils.getEditSession(location.getWorld());
-            CuboidClipboard clipboard;
-            try {
-                clipboard = CuboidClipboard.loadSchematic(schematic.getFile());
-            } catch (IOException | DataException ex) {
-                return;
-            }
-            clipboard.rotate2D((int) angle);
+            //CuboidClipboard clipboard;
+            Clipboard clipboard = schematic.getClipboard();
+
+            //clipboard = CuboidClipboard.loadSchematic(schematic.getFile());
+
+            vector = vector.transform2D((double) angle, 0, 0, 0, 0);
+
             try {
                 clipboard.paste(session, vector, !optionsSet.contains(PasteOptions.AIR));
             } catch (MaxChangedBlocksException exception) {

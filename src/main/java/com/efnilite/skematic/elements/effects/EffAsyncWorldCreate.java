@@ -10,6 +10,8 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.util.Kleenean;
 import com.boydti.fawe.bukkit.wrapper.AsyncWorld;
+import com.fastasyncworldedit.core.wrappers.WorldWrapper;
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.event.Event;

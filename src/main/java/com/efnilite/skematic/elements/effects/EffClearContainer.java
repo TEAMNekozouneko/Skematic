@@ -10,7 +10,9 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.util.Kleenean;
 import com.efnilite.skematic.utils.FaweUtils;
+import com.efnilite.skematic.utils.WeUtils;
 import com.sk89q.worldedit.EditSession;
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import org.bukkit.Location;
 import org.bukkit.event.Event;
 
@@ -42,9 +44,7 @@ public class EffClearContainer extends Effect {
             return;
         }
 
-        EditSession session = FaweUtils.getEditSession(location.getWorld());
-        session.clearContainerBlockContents(FaweUtils.toVector(location));
-        session.flushQueue();
+        BukkitAdapter.adapt(location.getWorld()).clearContainerBlockContents(FaweUtils.toVector(location));
     }
 
     @Override

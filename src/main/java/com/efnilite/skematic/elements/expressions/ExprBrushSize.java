@@ -20,9 +20,9 @@ public class ExprBrushSize extends SimplePropertyExpression<Player, Number> {
 
     @Override
     public Number convert(Player player) {
-        FawePlayer fPlayer = FaweUtils.getPlayer(player);
+        com.sk89q.worldedit.entity.Player wPlayer = FaweUtils.getPlayer(player);
         try {
-            return fPlayer.getSession().getBrushTool(fPlayer.toWorldEditPlayer()).getSize();
+            return wPlayer.getSession().getBrushTool(wPlayer).getSize();
         } catch (InvalidToolBindException e) {
             return null;
         }
